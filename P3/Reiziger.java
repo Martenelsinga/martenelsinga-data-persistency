@@ -1,6 +1,7 @@
 package P1;
 
 import java.sql.Date;
+import java.util.*;
 
 public class Reiziger{
     private Integer reiziger_id;
@@ -8,18 +9,14 @@ public class Reiziger{
     private String tussenvoegsel;
     private String achternaam;
     private Date geboortedatum;
-    //private Adres adres;
-    // Dus ik denk dat voor P3 ik er een adres-attribuut mee moet geven, maar ik snap nog niet helemaal hoe dat werkt.
-    // Kan ik je daar in de les even over vragen? Ik denk dat het zou werken zoals ik in commentaar heb bijgevoegd,
-    // maar dan moet je dus eerst een adres aanmaken voordat je een reiziger aanmaakt, wat me onpraktisch lijkt.
-    // Is er een manier om een optioneel argument mee te geven voor dit soort dingen?
+    private Adres adres;
+    private List<OVChipkaart> ovchipkaarten;
     public Reiziger(Integer reiziger_id, String voorletters, String tussenvoegsel, String achternaam, Date geboortedatum){
         this.reiziger_id = reiziger_id;
         this.voorletters = voorletters;
         this.tussenvoegsel = tussenvoegsel;
         this.achternaam = achternaam;
         this.geboortedatum = geboortedatum;
-        // this.adres = adres;
     }
     public Integer getId() {
         return reiziger_id;
@@ -61,19 +58,22 @@ public class Reiziger{
         this.geboortedatum = geboortedatum;
     }
 
+    public void setAdres(Adres adres){ this.adres = adres; }
+
+    public Adres getAdres() { return adres; }
+
     @Override
     public String toString() {
         if(tussenvoegsel == null){
             return "#" + reiziger_id +
                     ": " + voorletters + "." +
                     " " + achternaam + " (" + geboortedatum +
-                    ")";
-            // + " woont op " + adres.getStraat() + " te " + adres.getWoonplaats();
+                    ") woont op " + adres.getStraat() + " te " + adres.getWoonplaats();
+
         }
         return  "#" + reiziger_id +
                 ": " + voorletters + "." +
                 " " + tussenvoegsel + " " + achternaam + " (" + geboortedatum +
-                ")";
-        // + " woont op " + adres.getStraat() + " te " + adres.getWoonplaats();
+                ") woont op " + adres.getStraat() + " te " + adres.getWoonplaats();
     }
 }

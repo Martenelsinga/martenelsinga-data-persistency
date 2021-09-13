@@ -3,7 +3,7 @@ package P1;
 import java.util.*;
 import java.sql.*;
 
-public class AdresDAOPsql{
+public class AdresDAOPsql implements AdresDAO{
     Connection conn;
 
     public AdresDAOPsql(Connection conn) {

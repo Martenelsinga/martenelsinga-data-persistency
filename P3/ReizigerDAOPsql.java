@@ -5,9 +5,11 @@ import java.sql.*;
 
 public class ReizigerDAOPsql implements ReizigerDA{
     Connection conn;
+    AdresDAO adao;
 
-    public ReizigerDAOPsql(Connection conn) {
+    public ReizigerDAOPsql(Connection conn, AdresDAO adao) {
         this.conn = conn;
+        this.adao = adao;
     }
 
     public boolean save(Reiziger reiziger){
@@ -20,6 +22,7 @@ public class ReizigerDAOPsql implements ReizigerDA{
             prep.setString(4, reiziger.getAchternaam());
             prep.setDate(5, reiziger.getGeboortedatum());
             prep.executeQuery();
+            adao.save(reiziger.getAdres());
             return true;
         } catch (Exception e){
             System.out.println(e.getMessage());
@@ -37,6 +40,7 @@ public class ReizigerDAOPsql implements ReizigerDA{
              prep.setDate(4, reiziger.getGeboortedatum());
              prep.setInt(5, reiziger.getId());
              prep.executeQuery();
+             adao.update(reiziger.getAdres());
             return true;
         } catch (Exception e){
             System.out.println(e.getMessage());
@@ -50,6 +54,7 @@ public class ReizigerDAOPsql implements ReizigerDA{
         PreparedStatement prep = conn.prepareStatement(query);
         prep.setInt(1, reiziger.getId());
         prep.executeQuery();
+        adao.delete(reiziger.getAdres());
         return true;
     } catch (Exception e){
         System.out.println(e.getMessage());
@@ -69,6 +74,7 @@ public class ReizigerDAOPsql implements ReizigerDA{
                         rs.getString("tussenvoegsel"),
                         rs.getString("achternaam"),
                         rs.getDate("geboortedatum"));
+                rzgr.setAdres(adao.findByReiziger(rzgr));
                 return rzgr;
             }
             return null;
@@ -91,6 +97,7 @@ public class ReizigerDAOPsql implements ReizigerDA{
                         rs.getString("tussenvoegsel"),
                         rs.getString("achternaam"),
                         rs.getDate("geboortedatum"));
+                rzgr.setAdres(adao.findByReiziger(rzgr));
                 results.add(rzgr);
             }
             return results;
@@ -114,6 +121,7 @@ public class ReizigerDAOPsql implements ReizigerDA{
                         rs.getString("tussenvoegsel"),
                         rs.getString("achternaam"),
                         rs.getDate("geboortedatum"));
+                rzgr.setAdres(adao.findByReiziger(rzgr));
                 results.add(rzgr);
             }
             return results;
